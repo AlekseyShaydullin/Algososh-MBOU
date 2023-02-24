@@ -5,3 +5,12 @@
   width: 522px;
   margin: 0 auto;
 }
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 120px 0 0;
+  padding: 0;
+}
