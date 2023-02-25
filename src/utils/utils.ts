@@ -1,4 +1,4 @@
-import { TArrayString } from "../components/string/string";
+import { TArrayString } from "../types/main";
 
 export const delay = (timer: number) => new Promise<void>(
   resolve => setTimeout(resolve, timer)

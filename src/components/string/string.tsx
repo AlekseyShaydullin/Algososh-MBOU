@@ -1,6 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, FormEvent, useState } from "react";
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
+import { TArrayString } from "../../types/main";
 import { delay, swap } from "../../utils/utils";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
@@ -8,31 +9,26 @@ import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styleString from './string.module.css';
 
-export type TArrayString = {
-  letter?: string;
-  state: ElementStates
-};
-
 export const StringComponent: React.FC = () => {
-  const [letters, setLetters] = useState<string>('')
-  const [reverse, setReverse] = useState<TArrayString[] | null>(null)
+  const [letters, setLetters] = useState<string>('');
+  const [reverse, setReverse] = useState<TArrayString[] | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
   
-  const changeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setLetters(e.target.value)
+  const changeValue = (e: ChangeEvent<HTMLInputElement>): void => {
+    setLetters(e.target.value);
   }
 
-  const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if(e.key === 'Enter') {
-      getReverse(e)
+      getReverse(e);
     }
   }
 
   const reverseString = async (items: string) => {
-    setLoading(true)
+    setLoading(true);
     const arr = items.split('').map(letter => ({letter, state: ElementStates.Default}));
-    setReverse(arr)
-    await delay(SHORT_DELAY_IN_MS)
+    setReverse(arr);
+    await delay(SHORT_DELAY_IN_MS);
 
     for (let i = 0; i < arr.length; i++) {
       let end = arr.length - 1 - i;
@@ -52,7 +48,6 @@ export const StringComponent: React.FC = () => {
       arr[i].state = ElementStates.Modified;
       arr[end].state = ElementStates.Modified;
       setReverse([...arr]);
-      await delay(SHORT_DELAY_IN_MS);
     }
     setLoading(false);
   }
@@ -60,7 +55,7 @@ export const StringComponent: React.FC = () => {
   const getReverse = (e: FormEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     reverseString(letters);
-    setLetters('')
+    setLetters('');
   }
 
   return (
