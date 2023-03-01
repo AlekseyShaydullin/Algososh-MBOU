@@ -41,8 +41,6 @@ export const SortingPage: React.FC = () => {
   }
 
   const selectionSort = async (direction: Direction) => {
-    console.log('Выбор');
-    
     setLoading(true);
     for (let i = 0; i < arr.length; i++) {
       let maxIndex = i;
@@ -75,9 +73,7 @@ export const SortingPage: React.FC = () => {
     setLoading(false);
   }
 
-  const bubbleSorting = async (direction: Direction) => {
-    console.log('Пузырь');
-    
+  const bubbleSorting = async (direction: Direction) => {    
     setLoading(true);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
