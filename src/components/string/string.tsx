@@ -15,7 +15,7 @@ export const StringComponent: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   
   const changeValue = (e: ChangeEvent<HTMLInputElement>): void => {
-    setLetters(e.target.value);
+    setLetters((e.target.value).trim());
   }
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {

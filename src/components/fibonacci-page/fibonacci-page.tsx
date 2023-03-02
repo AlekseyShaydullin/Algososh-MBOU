@@ -13,7 +13,7 @@ export const FibonacciPage: React.FC = () => {
   const [arrFibo, setArrFibo] = useState<number[] | null>(null)
 
   const changeValue = (e: ChangeEvent<HTMLInputElement>): void => {
-    const fibNumber = Number(e.target.value);
+    const fibNumber = Number((e.target.value).trim());
     if (fibNumber < 1 || fibNumber > 19) {
       setNumber('');
     } else {
