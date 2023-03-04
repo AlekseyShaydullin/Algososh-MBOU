@@ -12,9 +12,10 @@ import { sortChecked } from "../../types/sort-checked";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
-  const [arr, setArr] = useState<TRandomArr[]>([]);
+  const [arr, setArr] = useState<Array<TRandomArr>>([]);
   const [checked, setChecked] = useState<sortChecked>(sortChecked.selection)
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoadingAsc, setLoadingAsc] = useState<boolean>(false);
+  const [isLoadingDes, setLoadingDes] = useState<boolean>(false);
 
   const getRandomArr = (min: number, max: number, minLen: number, maxLen: number): void => {
     const randomArrLength = getRandomInit(minLen, maxLen);
@@ -41,7 +42,7 @@ export const SortingPage: React.FC = () => {
   }
 
   const selectionSort = async (direction: Direction) => {
-    setLoading(true);
+    Direction.Ascending ? setLoadingAsc(true) : setLoadingDes(true);
     for (let i = 0; i < arr.length; i++) {
       let maxIndex = i;
       arr[maxIndex].state = ElementStates.Changing;
@@ -70,11 +71,11 @@ export const SortingPage: React.FC = () => {
       setArr([...arr]);
       await delay(SHORT_DELAY_IN_MS);
     }
-    setLoading(false);
+    Direction.Ascending ? setLoadingAsc(false) : setLoadingDes(false);
   }
 
-  const bubbleSorting = async (direction: Direction) => {    
-    setLoading(true);
+  const bubbleSorting = async (direction: Direction) => {
+    Direction.Ascending ? setLoadingAsc(true) : setLoadingDes(true);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         const p = j + 1;
@@ -94,7 +95,7 @@ export const SortingPage: React.FC = () => {
       arr[arr.length - i - 1].state = ElementStates.Modified;
       setArr([...arr]);
     }
-    setLoading(false);
+    Direction.Ascending ? setLoadingAsc(false) : setLoadingDes(false);
   }
 
   const handleSortAscending = (e: MouseEvent<HTMLButtonElement>) => {
@@ -115,7 +116,6 @@ export const SortingPage: React.FC = () => {
     }
   };
   
-
   return (
     <SolutionLayout title="Сортировка массива">
       <div className={styleSorting.wrapper}>
@@ -125,14 +125,14 @@ export const SortingPage: React.FC = () => {
             value={sortChecked.selection}
             onChange={handleChecked}
             checked={checked === sortChecked.selection}
-            disabled={isLoading}
+            disabled={isLoadingDes || isLoadingAsc}
           />
           <RadioInput
             label={'Пузырёк'}
             value={sortChecked.bubble}
             onChange={handleChecked}
             checked={checked === sortChecked.bubble}
-            disabled={isLoading}
+            disabled={isLoadingDes || isLoadingAsc}
           />
         </div>
         <div className={styleSorting.buttons}>
@@ -140,20 +140,22 @@ export const SortingPage: React.FC = () => {
             text={'По возрастанию'}
             sorting={Direction.Ascending}
             onClick={handleSortAscending}
-            isLoader={isLoading}
+            isLoader={isLoadingAsc}
+            disabled={arr.length === 0 || isLoadingDes}
           />
           <Button
             text={'По убыванию'}
             sorting={Direction.Descending}
             onClick={handleSortDescending}
-            isLoader={isLoading}
+            isLoader={isLoadingDes}
+            disabled={arr.length === 0 || isLoadingAsc}
           />
         </div>
         <Button
           text={'Новый массив'}
           onClick={getNewArr}
           extraClass={styleSorting.newArr}
-          disabled={isLoading}
+          disabled={isLoadingDes || isLoadingAsc}
         />
       </div>
       <ul className={styleSorting.diagram}>
