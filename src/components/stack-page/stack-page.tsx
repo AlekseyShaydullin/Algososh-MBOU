@@ -11,7 +11,8 @@ import styleStack from './stack-page.module.css'
 
 export const StackPage: React.FC = () => {
   const [letters, setLetters] = useState<string>('');
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoadingPush, setLoadingPush] = useState<boolean>(false);
+  const [isLoadingPop, setLoadingPop] = useState<boolean>(false);
   const [stack, setStack] = useState<Stack<string>>(new Stack());
   const [stackArr, setStackArr] = useState<Array<string>>([])
 
@@ -30,7 +31,7 @@ export const StackPage: React.FC = () => {
   }
 
 const handlePush = async (e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
-  setLoading(true);
+  setLoadingPush(true);
   e.preventDefault();
   if (letters !== '') {
     stack.push(letters);
@@ -39,17 +40,17 @@ const handlePush = async (e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLI
   }
   setLetters('');
   await delay(SHORT_DELAY_IN_MS);
-  setLoading(false);
+  setLoadingPush(false);
 }
 
 const handlePop = async (e: MouseEvent<HTMLButtonElement>) => {
-  setLoading(true);
+  setLoadingPop(true);
   e.preventDefault();
   await delay(SHORT_DELAY_IN_MS);
   stack.pop();
   setStack(stack);
   setStackArr([...stack.returnArr()]);
-  setLoading(false);
+  setLoadingPop(false);
 }
 
 const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
@@ -57,6 +58,8 @@ const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
   setStack(new Stack());
   setStackArr([]);
 }
+
+const isLoading = isLoadingPush || isLoadingPop;
 
   return (
     <SolutionLayout title="Стек">
@@ -73,21 +76,20 @@ const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
         <Button
           text={'Добавить'}
           onClick={handlePush}
-          isLoader={isLoading}
-          disabled={!letters}
+          isLoader={isLoadingPush}
+          disabled={!letters || isLoadingPop}
         />
         <Button
           text={'Удалить'}
           onClick={handlePop}
-          isLoader={isLoading}
-          disabled={stackArr.length === 0}
+          isLoader={isLoadingPop}
+          disabled={stackArr.length === 0 || isLoadingPush}
         />
         <div className={styleStack.clear}>
           <Button
             text={'Очистить'}
             onClick={handleClear}
-            isLoader={isLoading}
-            disabled={stackArr.length === 0}
+            disabled={stackArr.length === 0 || isLoadingPop || isLoadingPush}
           />
         </div>
       </div>
