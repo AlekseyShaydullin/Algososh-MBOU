@@ -23,6 +23,13 @@
   width: 362px;
 }
 
+.wrapperCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
 .list {
   list-style-type: none;
   display: flex;

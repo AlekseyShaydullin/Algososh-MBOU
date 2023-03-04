@@ -9,7 +9,8 @@ import { Circle } from "../ui/circle/circle";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import styleList from './list-page.module.css'
+import styleList from './list-page.module.css';
+import uuid from 'react-uuid';
 
 export const ListPage: React.FC = () => {
   const [letters, setLetters] = useState<string>('');
@@ -173,7 +174,7 @@ export const ListPage: React.FC = () => {
     setListArray([...listArray]);
     listArray[indexVal].state = ElementStates.Default;
     listArray.forEach(item => {
-      item.state =ElementStates.Default
+      item.state = ElementStates.Default
     });
     await delay(SHORT_DELAY_IN_MS);
     setListArray([...listArray]);
@@ -207,18 +208,19 @@ export const ListPage: React.FC = () => {
     setListArray([...listArray]);
     listArray.splice(indexVal, 1);
     if (indexVal === 0) {
+      listArray[indexVal] = {
+        ...listArray[indexVal],
+        value: listArray[indexVal].value,
+        state: ElementStates.Modified,
+        smallItem: null
+      }
+    } else {
       listArray[indexVal - 1] = {
         ...listArray[indexVal - 1],
         value: listArray[indexVal - 1].value,
         state: ElementStates.Modified,
         smallItem: null
       }
-    }
-    listArray[indexVal - 1] = {
-      ...listArray[indexVal - 1],
-      value: listArray[indexVal - 1].value,
-      state: ElementStates.Modified,
-      smallItem: null
     }
     await delay(SHORT_DELAY_IN_MS);
     setListArray([...listArray]);
@@ -227,13 +229,13 @@ export const ListPage: React.FC = () => {
     })
     await delay(SHORT_DELAY_IN_MS);
     setListArray([...listArray]);
-    setIndexVal(1);
+    setIndexVal(0);
     setLoading(false);
   }
-
+  
   const minInputIndex = 0;
-  const maxInputIndex = listArray.length + 1;
-  const limitedInput = !(minInputIndex <= indexVal && indexVal <= maxInputIndex);
+  const maxInputIndex = listArray.length - 1;
+  const limitedAddInput = !(minInputIndex <= indexVal && indexVal <= maxInputIndex);
 
   return (
     <SolutionLayout title="Связный список">
@@ -281,7 +283,8 @@ export const ListPage: React.FC = () => {
         <Input
           placeholder={'Введите индекс'}
           extraClass={styleList.input}
-          max={listArray.length + 1}
+          max={listArray.length - 1}
+          min={0}
           type={'number'}
           onChange={changeValueIndex}
           onKeyDown={handleEnter}
@@ -292,20 +295,21 @@ export const ListPage: React.FC = () => {
         extraClass={styleList.buttonIndex}
         onClick={handleAddToIndex}
         isLoader={isLoading}
-        disabled={limitedInput}
+        disabled={limitedAddInput || letters.length === 0}
         />
         <Button
           text={'Удалить по индексу'}
           extraClass={styleList.buttonIndex}
           onClick={handleDeleteByIndex}
           isLoader={isLoading}
+          disabled={ indexVal > listArr.length - 1 || indexVal < 0}
         />
       </div>
       <ul className={styleList.list}>
         {listArray.map((list: IListArr, index: number) => {
           return (
-            <>
-              <li className={styleList.li} key={index}>
+            <div className={styleList.wrapperCircle} key={uuid()}>
+              <li className={styleList.li} >
                 {list.smallItem && (
                   <Circle
                     isSmall
@@ -325,7 +329,7 @@ export const ListPage: React.FC = () => {
               {index < listArray.length - 1 &&
                 <ArrowIcon fill={list.state !== ElementStates.Changing ? '#0032FF' : '#D252E1'} />
               }
-            </>
+            </div>
           )
         })}
       </ul>
