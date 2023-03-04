@@ -11,7 +11,8 @@ import styleQueue from './queue-page.module.css'
 
 export const QueuePage: React.FC = () => {
   const [letters, setLetters] = useState<string>('');
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoadingEnq, setLoadingEnq] = useState<boolean>(false);
+  const [isLoadingDeq, setLoadingDeq] = useState<boolean>(false);
   const [queue, setQueue] = useState<Queue<string>>(new Queue(7));
   const [queueArr, setQueueArr] = useState<Array<string | null>>([...queue.returnArr()]);
   const [current, setCurrent] = useState<number>(-1)
@@ -21,7 +22,7 @@ export const QueuePage: React.FC = () => {
   }
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && letters !== '' && length() < 7) {
       handleEnqueue(e);
     }
   }
@@ -34,8 +35,16 @@ export const QueuePage: React.FC = () => {
     return queue.getTail();
   }
 
+  const size = (): number => {
+    return queue.getSize();
+  }
+
+  const length = (): number => {
+    return queue.getLength()
+  }
+
   const handleEnqueue = async (e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
-    setLoading(true);
+    setLoadingEnq(true);
     e.preventDefault();
     if (letters !== '') {
       queue.enqueue(letters);
@@ -47,11 +56,11 @@ export const QueuePage: React.FC = () => {
     }
     setLetters('');
     await delay(SHORT_DELAY_IN_MS);
-    setLoading(false);
+    setLoadingEnq(false);
   }
 
   const handleDequeue = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoadingDeq(true);
     e.preventDefault();
     if (queue) {
       setCurrent(head());
@@ -61,16 +70,16 @@ export const QueuePage: React.FC = () => {
       setCurrent(-1);
       await delay(SHORT_DELAY_IN_MS);
     }
-    setLoading(false);
+    setLoadingDeq(false);
   }
 
   const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
     e.preventDefault();
     queue.clear();
     setQueueArr([...queue.returnArr()]);
-    setLoading(false);
   }
+
+  const isLoading = isLoadingDeq || isLoadingEnq;
 
   return (
     <SolutionLayout title="Очередь">
@@ -87,21 +96,20 @@ export const QueuePage: React.FC = () => {
         <Button
           text={'Добавить'}
           onClick={handleEnqueue}
-          isLoader={isLoading}
-          disabled={!letters}
+          isLoader={isLoadingEnq}
+          disabled={!letters || isLoadingDeq || size() > 7}
         />
         <Button
           text={'Удалить'}
           onClick={handleDequeue}
-          isLoader={isLoading}
-          disabled={queueArr.length === 0}
+          isLoader={isLoadingDeq}
+          disabled={queue.isEmpty() || isLoadingEnq}
         />
         <div className={styleQueue.clear}>
           <Button
             text={'Очистить'}
             onClick={handleClear}
-            isLoader={isLoading}
-            disabled={queueArr.length === 0}
+            disabled={queue.isEmpty() || isLoading}
           />
         </div>
       </div>

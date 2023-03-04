@@ -89,7 +89,7 @@ const isLoading = isLoadingPush || isLoadingPop;
           <Button
             text={'Очистить'}
             onClick={handleClear}
-            disabled={stackArr.length === 0 || isLoadingPop || isLoadingPush}
+            disabled={stackArr.length === 0 || isLoading}
           />
         </div>
       </div>
