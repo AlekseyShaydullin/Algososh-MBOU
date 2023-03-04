@@ -302,7 +302,7 @@ export const ListPage: React.FC = () => {
           extraClass={styleList.buttonIndex}
           onClick={handleDeleteByIndex}
           isLoader={isLoading}
-          disabled={ indexVal > listArr.length - 1 || indexVal < 0}
+          disabled={ indexVal > listArr.length - 1 || indexVal < 0 || listArray.length === 0}
         />
       </div>
       <ul className={styleList.list}>
