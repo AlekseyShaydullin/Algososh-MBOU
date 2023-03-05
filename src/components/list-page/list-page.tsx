@@ -11,11 +11,20 @@ import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styleList from './list-page.module.css';
 import uuid from 'react-uuid';
+import { EventStates } from "../../types/event-states";
+
+type TLoadingState = {
+  loading: boolean;
+  event: EventStates;
+}
 
 export const ListPage: React.FC = () => {
   const [letters, setLetters] = useState<string>('');
   const [indexVal, setIndexVal] = useState<number>(0);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<TLoadingState>({
+    loading: false,
+    event: EventStates.NoEvent
+  });
   const [list, setList] = useState<LinkedList<string>>(new LinkedList());
   const [listArray, setListArray] = useState<Array<IListArr>>(listArr)
 
@@ -34,7 +43,10 @@ export const ListPage: React.FC = () => {
   }
 
   const handleAddToHead = async(e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.AddToHead
+    });
     e.preventDefault();
     list.prepend(letters);
     setList(list);
@@ -58,11 +70,17 @@ export const ListPage: React.FC = () => {
     listArray[0].state = ElementStates.Default;
     setListArray([...listArray]);
     setLetters('');
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.AddToHead
+    });
   }
 
   const handleAddToTail = async(e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.AddToTail
+    });
     e.preventDefault();
     list.append(letters);
     setList(list);
@@ -90,11 +108,17 @@ export const ListPage: React.FC = () => {
     listArray[listArray.length - 1].state = ElementStates.Default;
     setListArray([...listArray]);
     setLetters('');
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.AddToTail
+    });
   }
 
   const handleDeleteFromHead = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.DeleteFromHead
+    });
     e.preventDefault();
     listArray[0] = {
       ...listArr[0],
@@ -111,11 +135,17 @@ export const ListPage: React.FC = () => {
     await delay(SHORT_DELAY_IN_MS);
     listArray.shift();
     setListArray([...listArray]);
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.DeleteFromHead
+    });
   }
 
   const handleDeleteFromTail = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.DeleteFromTail
+    });
     e.preventDefault();
     listArray[listArray.length - 1] = {
       ...listArray[listArray.length - 1],
@@ -132,11 +162,17 @@ export const ListPage: React.FC = () => {
     await delay(SHORT_DELAY_IN_MS);
     listArray.pop();
     setListArray([...listArray]);
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.DeleteFromTail
+    });
   }
 
   const handleAddToIndex = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.AddToIndex
+    });
     e.preventDefault();
     list.addByIndex(letters, indexVal);
     setList(list);
@@ -180,11 +216,17 @@ export const ListPage: React.FC = () => {
     setListArray([...listArray]);
     setIndexVal(0);
     setLetters('');
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.AddToIndex
+    });
   }
 
   const handleDeleteByIndex = async (e: MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
+    setLoading({
+      loading: true,
+      event: EventStates.DeleteByIndex
+    });
     e.preventDefault();
     list.deleteByIndex(indexVal);
     for (let i = 0; i <= indexVal; i++) {
@@ -230,7 +272,18 @@ export const ListPage: React.FC = () => {
     await delay(SHORT_DELAY_IN_MS);
     setListArray([...listArray]);
     setIndexVal(0);
-    setLoading(false);
+    setLoading({
+      loading: false,
+      event: EventStates.DeleteByIndex
+    });
+  }
+
+  const checkLoading = (EventStates: string): boolean => {
+    return isLoading.loading && isLoading.event === EventStates ? true : false
+  }
+  
+  const checkDisabled = (EventStates: string): boolean => {
+    return isLoading.loading && isLoading.event !== EventStates ? true : false
   }
   
   const minInputIndex = 0;
@@ -254,29 +307,29 @@ export const ListPage: React.FC = () => {
           text={'Добавить в head'}
           extraClass={styleList.button}
           onClick={handleAddToHead}
-          isLoader={isLoading}
-          disabled={!letters || listArray.length === 0}
+          isLoader={checkLoading('addToHead')}
+          disabled={checkDisabled('addToHead') || !letters || listArray.length === 0}
         />
         <Button
           text={'Добавить в tail'}
           extraClass={styleList.button}
           onClick={handleAddToTail}
-          isLoader={isLoading}
-          disabled={!letters || listArray.length === 0}
+          isLoader={checkLoading('addToTail')}
+          disabled={checkDisabled('addToTail') || !letters || listArray.length === 0}
         />
         <Button
           text={'Удалить из head'}
           extraClass={styleList.button}
           onClick={handleDeleteFromHead}
-          isLoader={isLoading}
-          disabled={isLoading || listArray.length === 0}
+          isLoader={checkLoading('deleteFromHead')}
+          disabled={checkDisabled('deleteFromHead') || listArray.length === 0}
         />
         <Button
           text={'Удалить из tail'}
           extraClass={styleList.button}
           onClick={handleDeleteFromTail}
-          isLoader={isLoading}
-          disabled={isLoading || listArray.length === 0}
+          isLoader={checkLoading('deleteFromTail')}
+          disabled={checkDisabled('deleteFromTail') || listArray.length === 0}
         />
       </div>
       <div className={styleList.wrapperIndex}>
@@ -294,15 +347,15 @@ export const ListPage: React.FC = () => {
         text={'Добавить по индексу'}
         extraClass={styleList.buttonIndex}
         onClick={handleAddToIndex}
-        isLoader={isLoading}
-        disabled={limitedAddInput || letters.length === 0}
+        isLoader={checkLoading('addToIndex')}
+        disabled={checkDisabled('addToIndex') || limitedAddInput || letters.length === 0}
         />
         <Button
           text={'Удалить по индексу'}
           extraClass={styleList.buttonIndex}
           onClick={handleDeleteByIndex}
-          isLoader={isLoading}
-          disabled={ indexVal > listArr.length - 1 || indexVal < 0 || listArray.length === 0}
+          isLoader={checkLoading('deleteByIndex')}
+          disabled={checkDisabled('deleteByIndex') || indexVal > listArr.length - 1 || indexVal < 0 || listArray.length === 0}
         />
       </div>
       <ul className={styleList.list}>
