@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.input {
+  width: 377px;
+}
+
+.clear {
+  padding-left: 80px;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 78px 0 0;
+  padding: 0;
+}

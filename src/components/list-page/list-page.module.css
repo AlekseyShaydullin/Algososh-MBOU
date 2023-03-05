@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.input {
+  width: 204px;
+}
+
+.button {
+  width: 175px;
+}
+
+.wrapperIndex {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.buttonIndex {
+  width: 362px;
+}
+
+.wrapperCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 120px 0 0;
+  padding: 0;
+}
+
+.li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.add {
+  position: absolute;
+  top: -70px;
+  left: 12px;
+}
+
+.del {
+  position: absolute;
+  bottom: -85px;
+  left: 12px;
+}
