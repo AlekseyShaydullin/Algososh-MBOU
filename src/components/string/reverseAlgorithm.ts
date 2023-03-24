@@ -5,8 +5,8 @@ import { TArrayString } from "../../types/main";
 import { delay, swap } from "../../utils/utils";
 
 export const reverseAlgorithm = async (
-  arr: TArrayString[],
-  setReverse: Dispatch<SetStateAction<TArrayString[] | null>>
+  arr: Array<TArrayString>,
+  setReverse: Dispatch<SetStateAction<Array<TArrayString> | null>>
 ) => {
   for (let i = 0; i < arr.length; i++) {
     let end = arr.length - 1 - i;
