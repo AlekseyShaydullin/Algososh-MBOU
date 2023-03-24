@@ -1,12 +1,13 @@
 import React, { ChangeEvent, KeyboardEvent, FormEvent, useState } from "react";
-import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { TArrayString } from "../../types/main";
-import { delay, swap } from "../../utils/utils";
+import { delay } from "../../utils/utils";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import { reverseAlgorithm } from "./reverseAlgorithm";
 import styleString from './string.module.css';
 
 export const StringComponent: React.FC = () => {
@@ -29,26 +30,7 @@ export const StringComponent: React.FC = () => {
     const arr = items.split('').map(letter => ({letter, state: ElementStates.Default}));
     setReverse(arr);
     await delay(SHORT_DELAY_IN_MS);
-
-    for (let i = 0; i < arr.length; i++) {
-      let end = arr.length - 1 - i;
-      
-      if (arr.length === 1) {
-        arr[i].state = ElementStates.Modified;
-      }
-      
-      if (i < end) {
-        arr[i].state = ElementStates.Changing;
-        arr[end].state = ElementStates.Changing;
-        setReverse([...arr]);
-        swap(arr, i, end);
-        await delay(DELAY_IN_MS);
-      }
-
-      arr[i].state = ElementStates.Modified;
-      arr[end].state = ElementStates.Modified;
-      setReverse([...arr]);
-    }
+    reverseAlgorithm(arr, setReverse);
     setLoading(false);
   }
 
