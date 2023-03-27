@@ -42,7 +42,7 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={styleString.form}>
+      <form className={styleString.form} data-cy={'form'}>
         <div className={styleString.wrapper}>
           <Input 
             placeholder={'Введите текст'}
@@ -51,12 +51,14 @@ export const StringComponent: React.FC = () => {
             onChange={changeValue}
             onKeyDown={handleEnter}
             value={letters}
+            data-cy={'input'}
           />
           <Button
             text={'Развернуть'}
             onClick={getReverse}
             isLoader={isLoading}
             disabled={!letters}
+            data-cy={'submit'}
           />
         </div>
         <ul className={styleString.list}>
