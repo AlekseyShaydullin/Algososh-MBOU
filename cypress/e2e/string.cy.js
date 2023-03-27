@@ -9,7 +9,7 @@ describe('testing a component that reverses a string', () => {
 
   it('checking that if the input is empty, then the add button is not available', () => {
     cy.get(CY_FORM).within(() => {
-      cy.get('input').should('be.empty')
+      cy.get(CY_INPUT).should('be.empty')
       cy.get(CY_BTN_SUBMIT).should('have.text', 'Развернуть').should('be.disabled');
     })
   });
