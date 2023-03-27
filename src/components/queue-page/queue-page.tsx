@@ -49,13 +49,12 @@ export const QueuePage: React.FC = () => {
     if (letters !== '') {
       queue.enqueue(letters);
       setQueue(queue);
-      setCurrent(tail());
       setQueueArr([...queue.returnArr()]);
+      setCurrent(tail());
+      setLetters('');
       await delay(SHORT_DELAY_IN_MS);
       setCurrent(-1);
     }
-    setLetters('');
-    await delay(SHORT_DELAY_IN_MS);
     setLoadingEnq(false);
   }
 
@@ -83,7 +82,7 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
-      <div className={styleQueue.wrapper}>
+      <form className={styleQueue.wrapper} data-cy={'form'}>
         <Input
           placeholder={'Введите значение'}
           extraClass={styleQueue.input}
@@ -92,27 +91,31 @@ export const QueuePage: React.FC = () => {
           onChange={changeValue}
           onKeyDown={handleEnter}
           value={letters}
+          data-cy={'input'}
         />
         <Button
           text={'Добавить'}
           onClick={handleEnqueue}
           isLoader={isLoadingEnq}
           disabled={!letters || isLoadingDeq || size() > 7}
+          data-cy={'submit'}
         />
         <Button
           text={'Удалить'}
           onClick={handleDequeue}
           isLoader={isLoadingDeq}
           disabled={queue.isEmpty() || isLoadingEnq}
+          data-cy={'remove'}
         />
         <div className={styleQueue.clear}>
           <Button
             text={'Очистить'}
             onClick={handleClear}
             disabled={queue.isEmpty() || isLoading}
+            data-cy={'clear'}
           />
         </div>
-      </div>
+      </form>
       <ul className={styleQueue.list}>
         {queueArr && queueArr.map((el, index: number) => {
           return(
