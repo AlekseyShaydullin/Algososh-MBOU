@@ -63,7 +63,7 @@ const isLoading = isLoadingPush || isLoadingPop;
 
   return (
     <SolutionLayout title="Стек">
-      <div className={styleStack.wrapper}>
+      <form className={styleStack.wrapper} data-cy={'form'}>
         <Input
           placeholder={'Введите цифру'}
           extraClass={styleStack.input}
@@ -72,32 +72,36 @@ const isLoading = isLoadingPush || isLoadingPop;
           onChange={changeValue}
           onKeyDown={handleEnter}
           value={letters}
+          data-cy={'input'}
         />
         <Button
           text={'Добавить'}
           onClick={handlePush}
           isLoader={isLoadingPush}
           disabled={!letters || isLoadingPop}
+          data-cy={'submit'}
         />
         <Button
           text={'Удалить'}
           onClick={handlePop}
           isLoader={isLoadingPop}
           disabled={stackArr.length === 0 || isLoadingPush}
+          data-cy={'remove'}
         />
         <div className={styleStack.clear}>
           <Button
             text={'Очистить'}
             onClick={handleClear}
             disabled={stackArr.length === 0 || isLoading}
+            data-cy={'clear'}
           />
         </div>
-      </div>
+      </form>
       <ul className={styleStack.list}>
         {
         stackArr && stackArr.map((el: string, index: number) => {
           return (
-            <li className={styleStack.letter} key={index}>
+            <li className={styleStack.letter} key={index} data-cy={'circles'}>
               <Circle
                 letter={el}
                 index={index}
