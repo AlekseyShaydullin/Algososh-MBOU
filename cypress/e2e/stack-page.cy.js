@@ -9,7 +9,7 @@ describe('testing the correct operation of the stack component', () => {
 
   it('checking that if the input is empty, then the add button is not available', () =>  {
     cy.get(CY_FORM).within(() => {
-      cy.get(CY_INPUT).should('be.empty')
+      cy.get(CY_INPUT).should('be.empty');
       cy.get(CY_BTN_SUBMIT).should('have.text', 'Добавить').should('be.disabled');
     });
   })
@@ -28,39 +28,24 @@ describe('testing the correct operation of the stack component', () => {
   it('check for adding items', () => {
     cy.clock();
     addItem('55');
-    cy.get(CY_CIRCLE).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'))
+    cy.get(CY_CIRCLE).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
 
     addItem('215');
     cy.get(CY_CIRCLE).then(item => {
-        cy.get(item[0])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'))
-        cy.get(item[0])
-            .children().should('have.text', '55')
-        cy.get(item[1])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'))
-        cy.get(item[1])
-            .children().should('have.text', '215')
+      cy.get(item[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[0]).children().should('have.text', '55');
+      cy.get(item[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[1]).children().should('have.text', '215');
     });
 
     addItem('4');
     cy.get(CY_CIRCLE).then(item => {
-        cy.get(item[0])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'))
-        cy.get(item[0])
-            .children().should('have.text', '55')
-        cy.get(item[1])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'))
-        cy.get(item[1])
-            .children().should('have.text', '215')
-        cy.get(item[2])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'))
-        cy.get(item[2])
-            .children().should('have.text', '4')
+      cy.get(item[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[0]).children().should('have.text', '55');
+      cy.get(item[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[1]).children().should('have.text', '215');
+      cy.get(item[2]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[2]).children().should('have.text', '4');
     });
   })
 
@@ -73,11 +58,8 @@ describe('testing the correct operation of the stack component', () => {
     cy.get(CY_BTN_REMOVE).click();
     cy.tick(SHORT_DELAY_IN_MS);
     cy.get(CY_CIRCLE).then(item => {
-        cy.get(item[0])
-            .invoke('attr', 'class')
-            .then(classList => expect(classList).contains('circle_default'));
-        cy.get(item[0])
-            .children().should('have.text', '333');
+      cy.get(item[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(item[0]).children().should('have.text', '333');
     });
   })
 

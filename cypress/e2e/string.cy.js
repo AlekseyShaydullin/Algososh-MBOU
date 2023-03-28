@@ -9,7 +9,7 @@ describe('testing a component that reverses a string', () => {
 
   it('checking that if the input is empty, then the add button is not available', () => {
     cy.get(CY_FORM).within(() => {
-      cy.get(CY_INPUT).should('be.empty')
+      cy.get(CY_INPUT).should('be.empty');
       cy.get(CY_BTN_SUBMIT).should('have.text', 'Развернуть').should('be.disabled');
     })
   });
@@ -23,85 +23,53 @@ describe('testing a component that reverses a string', () => {
     });
 
     cy.get(CY_CIRCLE).then((letter) => {
-      cy.get(letter[0]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[0])
-      .children().should('have.text', 'd');
-      cy.get(letter[1]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[1])
-      .children().should('have.text', 'o');
-      cy.get(letter[2]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[2])
-      .children().should('have.text', 'o');
-      cy.get(letter[3]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[3])
-      .children().should('have.text', 'r');
+      cy.get(letter[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[0]).children().should('have.text', 'd');
+      cy.get(letter[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[1]).children().should('have.text', 'o');
+      cy.get(letter[2]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[2]).children().should('have.text', 'o');
+      cy.get(letter[3]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[3]).children().should('have.text', 'r');
     });
 
     cy.tick(DELAY_IN_MS);
 
     cy.get(CY_CIRCLE).then((letter) => {
-      cy.get(letter[0]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_changing'));
-      cy.get(letter[0])
-      .children().should('have.text', 'd');
-      cy.get(letter[1]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[1])
-      .children().should('have.text', 'o');
-      cy.get(letter[2]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_default'));
-      cy.get(letter[2])
-      .children().should('have.text', 'o');
-      cy.get(letter[3]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_changing'));
-      cy.get(letter[3])
-      .children().should('have.text', 'r');
+      cy.get(letter[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_changing'));
+      cy.get(letter[0]).children().should('have.text', 'd');
+      cy.get(letter[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[1]).children().should('have.text', 'o');
+      cy.get(letter[2]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
+      cy.get(letter[2]).children().should('have.text', 'o');
+      cy.get(letter[3]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_changing'));
+      cy.get(letter[3]).children().should('have.text', 'r');
     });
 
     cy.tick(DELAY_IN_MS);
 
     cy.get(CY_CIRCLE).then((letter) => {
-      cy.get(letter[0]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[0])
-      .children().should('have.text', 'r');
-      cy.get(letter[1]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_changing'));
-      cy.get(letter[1])
-      .children().should('have.text', 'o');
-      cy.get(letter[2]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_changing'));
-      cy.get(letter[2])
-      .children().should('have.text', 'o');
-      cy.get(letter[3]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[3])
-      .children().should('have.text', 'd');
+      cy.get(letter[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[0]).children().should('have.text', 'r');
+      cy.get(letter[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_changing'));
+      cy.get(letter[1]).children().should('have.text', 'o');
+      cy.get(letter[2]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_changing'));
+      cy.get(letter[2]).children().should('have.text', 'o');
+      cy.get(letter[3]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[3]).children().should('have.text', 'd');
     });
 
     cy.tick(DELAY_IN_MS);
 
     cy.get(CY_CIRCLE).then((letter) => {
-      cy.get(letter[0]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[0])
-      .children().should('have.text', 'r');
-      cy.get(letter[1]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[1])
-      .children().should('have.text', 'o');
-      cy.get(letter[2]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[2])
-      .children().should('have.text', 'o');
-      cy.get(letter[3]).invoke('attr', 'class')
-      .then(classList => expect(classList).contains('circle_modified'));
-      cy.get(letter[3])
-      .children().should('have.text', 'd');
+      cy.get(letter[0]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[0]).children().should('have.text', 'r');
+      cy.get(letter[1]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[1]).children().should('have.text', 'o');
+      cy.get(letter[2]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[2]).children().should('have.text', 'o');
+      cy.get(letter[3]).invoke('attr', 'class').then(classList => expect(classList).contains('circle_modified'));
+      cy.get(letter[3]).children().should('have.text', 'd');
     });
   })
 })

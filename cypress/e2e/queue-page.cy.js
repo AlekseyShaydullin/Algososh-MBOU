@@ -20,10 +20,10 @@ describe('testing the correct operation of the queue component', () => {
     cy.clock();
     cy.get(CY_INPUT).type('548');
     cy.get(CY_BTN_SUBMIT).click();
+
     cy.tick(SHORT_DELAY_IN_MS);
 
     cy.get(CY_HEAD_CIRCLE).should(div => expect(div).to.have.text('head'));
-
     cy.get(CY_TAIL_CIRCLE).should(div => expect(div).to.have.text('tail'));
 
     cy.tick(SHORT_DELAY_IN_MS);
@@ -36,6 +36,7 @@ describe('testing the correct operation of the queue component', () => {
     cy.get(CY_TAIL_CIRCLE).eq(1).should(div => expect(div).to.have.text('tail'));
     cy.get(CY_CIRCLE).contains('185').parent().invoke('attr', 'class').then(classList => expect(classList).contains('circle_changing'));
     cy.get(CY_INPUT).should('be.empty');
+
     cy.tick(SHORT_DELAY_IN_MS);
 
     cy.get(CY_INPUT).type('55');
@@ -45,6 +46,7 @@ describe('testing the correct operation of the queue component', () => {
     cy.get(CY_TAIL_CIRCLE).eq(2).should(div => expect(div).to.have.text('tail'));
     cy.get(CY_CIRCLE).contains('185').parent().invoke('attr', 'class').then(classList => expect(classList).contains('circle_default'));
     cy.get(CY_INPUT).should('be.empty');
+
     cy.tick(SHORT_DELAY_IN_MS);
   });
 
@@ -62,7 +64,6 @@ describe('testing the correct operation of the queue component', () => {
 
     cy.get(CY_INPUT).type('68');
     cy.get(CY_BTN_SUBMIT).click();
-
     cy.get(CY_HEAD_CIRCLE).first().should(div => expect(div).to.have.text('head'));
     cy.get(CY_TAIL_CIRCLE).eq(2).should(div => expect(div).to.have.text('tail'));
 
