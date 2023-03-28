@@ -292,7 +292,7 @@ export const ListPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Связный список">
-      <div className={styleList.wrapper}>
+      <form className={styleList.wrapper} data-cy={'form'}>
         <Input
           placeholder={'Введите значение'}
           extraClass={styleList.input}
@@ -302,6 +302,7 @@ export const ListPage: React.FC = () => {
           onChange={changeValueLetters}
           onKeyDown={handleEnter}
           value={letters}
+          data-cy={'letterInput'}
         />
         <Button
           text={'Добавить в head'}
@@ -309,6 +310,7 @@ export const ListPage: React.FC = () => {
           onClick={handleAddToHead}
           isLoader={checkLoading('addToHead')}
           disabled={checkDisabled('addToHead') || !letters || listArray.length === 0}
+          data-cy={'addToHeadBtn'}
         />
         <Button
           text={'Добавить в tail'}
@@ -316,6 +318,7 @@ export const ListPage: React.FC = () => {
           onClick={handleAddToTail}
           isLoader={checkLoading('addToTail')}
           disabled={checkDisabled('addToTail') || !letters || listArray.length === 0}
+          data-cy={'addToTailBtn'}
         />
         <Button
           text={'Удалить из head'}
@@ -323,6 +326,7 @@ export const ListPage: React.FC = () => {
           onClick={handleDeleteFromHead}
           isLoader={checkLoading('deleteFromHead')}
           disabled={checkDisabled('deleteFromHead') || listArray.length === 0}
+          data-cy={'deleteFromHeadBtn'}
         />
         <Button
           text={'Удалить из tail'}
@@ -330,9 +334,10 @@ export const ListPage: React.FC = () => {
           onClick={handleDeleteFromTail}
           isLoader={checkLoading('deleteFromTail')}
           disabled={checkDisabled('deleteFromTail') || listArray.length === 0}
+          data-cy={'deleteFromTailBtn'}
         />
-      </div>
-      <div className={styleList.wrapperIndex}>
+      </form>
+      <form className={styleList.wrapperIndex} data-cy={'form_index'}>
         <Input
           placeholder={'Введите индекс'}
           extraClass={styleList.input}
@@ -342,6 +347,7 @@ export const ListPage: React.FC = () => {
           onChange={changeValueIndex}
           onKeyDown={handleEnter}
           value={indexVal}
+          data-cy={'indexInput'}
         />
         <Button
         text={'Добавить по индексу'}
@@ -349,6 +355,7 @@ export const ListPage: React.FC = () => {
         onClick={handleAddToIndex}
         isLoader={checkLoading('addToIndex')}
         disabled={checkDisabled('addToIndex') || limitedAddInput || letters.length === 0}
+        data-cy={'addToIndexBtn'}
         />
         <Button
           text={'Удалить по индексу'}
@@ -356,8 +363,9 @@ export const ListPage: React.FC = () => {
           onClick={handleDeleteByIndex}
           isLoader={checkLoading('deleteByIndex')}
           disabled={checkDisabled('deleteByIndex') || indexVal > listArr.length - 1 || indexVal < 0 || listArray.length === 0}
+          data-cy={'deleteByIndexBtn'}
         />
-      </div>
+      </form>
       <ul className={styleList.list}>
         {listArray.map((list: IListArr, index: number) => {
           return (
