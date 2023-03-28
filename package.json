@@ -16,7 +16,6 @@
     "react-fast-marquee": "^1.3.5",
     "react-router-dom": "^5.3.3",
     "react-scripts": "^5.0.1",
-    "react-test-renderer": "^18.2.0",
     "react-uuid": "^2.0.0",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
@@ -48,7 +47,9 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-test-renderer": "^18.0.0",
     "cypress": "^12.8.1",
-    "eslint-plugin-cypress": "^2.12.1"
+    "eslint-plugin-cypress": "^2.12.1",
+    "react-test-renderer": "^18.2.0"
   }
 }
